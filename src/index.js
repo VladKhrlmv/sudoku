@@ -1,4 +1,4 @@
-/*module.exports*/let a = function solveSudoku(matrix) {
+module.exports = function solveSudoku(matrix) {
   if (solveGrid(matrix) == true) {
     return matrix;
   }
@@ -78,16 +78,16 @@ function isBoxOk(matrix, row, col, num) {
   return true;
 }
 
-const initial = [
-  [6, 5, 0, 7, 3, 0, 0, 8, 0],
-  [0, 0, 0, 4, 8, 0, 5, 3, 0],
-  [8, 4, 0, 9, 2, 5, 0, 0, 0],
-  [0, 9, 0, 8, 0, 0, 0, 0, 0],
-  [5, 3, 0, 2, 0, 9, 6, 0, 0],
-  [0, 0, 6, 0, 0, 0, 8, 0, 0],
-  [0, 0, 9, 0, 0, 0, 0, 0, 6],
-  [0, 0, 7, 0, 0, 0, 0, 5, 0],
-  [1, 6, 5, 3, 9, 0, 4, 7, 0]
-];
+// const initial = [
+//   [6, 5, 0, 7, 3, 0, 0, 8, 0],
+//   [0, 0, 0, 4, 8, 0, 5, 3, 0],
+//   [8, 4, 0, 9, 2, 5, 0, 0, 0],
+//   [0, 9, 0, 8, 0, 0, 0, 0, 0],
+//   [5, 3, 0, 2, 0, 9, 6, 0, 0],
+//   [0, 0, 6, 0, 0, 0, 8, 0, 0],
+//   [0, 0, 9, 0, 0, 0, 0, 0, 6],
+//   [0, 0, 7, 0, 0, 0, 0, 5, 0],
+//   [1, 6, 5, 3, 9, 0, 4, 7, 0]
+// ];
 
-console.log(a(initial));
+// console.log(a(initial));
