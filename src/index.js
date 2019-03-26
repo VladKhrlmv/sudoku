@@ -9,12 +9,12 @@ let row = 0 ;
 let col = 0;
 
 function solveGrid(matrix) {
-  var cell = findUnassignedLocation(matrix, row, col);
+  var cell = findLocation(matrix, row, col);
   row = cell[0];
   col = cell[1];
   console.log(matrix, '1');
 
-  // base case: if no empty cell  
+
   if (row == -1) {
       return true;
   }
@@ -28,17 +28,17 @@ function solveGrid(matrix) {
               return true;
           }
 
-                  // mark cell as empty (with 0)    
+        
           matrix[row][col] = 0;
       }
   }
 
-  // trigger back tracking
+ 
   return false;
 }
 
 
-function findUnassignedLocation(grid, row, col) {
+function findLocation(grid, row, col) {
   for ( ; row < 9 ; col = 0, row++)
       for (; col < 9 ; col++)
           if (grid[row][col] == 0)
@@ -49,24 +49,24 @@ function findUnassignedLocation(grid, row, col) {
 
 function noConflicts(matrix, row, col, num) {
   console.log(matrix, '4');
-  return isRowOk(matrix, row, num) && isColOk(matrix, col, num) && isBoxOk(matrix, row, col, num);
+  return RowOk(matrix, row, num) && ColOk(matrix, col, num) && BoxOk(matrix, row, col, num);
 }
 
-function isRowOk(matrix, row, num) {
+function RowOk(matrix, row, num) {
   for (var col = 0; col < 9; col++)
       if (matrix[row][col] == num)
           return false;
 
   return true;
 }
-function isColOk(matrix, col, num) {
+function ColOk(matrix, col, num) {
   for (var row = 0; row < 9; row++)
   if (matrix[row][col] == num)
       return false;
 
   return true;    
 }
-function isBoxOk(matrix, row, col, num) {
+function BoxOk(matrix, row, col, num) {
   row = (row / 3) * 3;
   col = (col / 3) * 3;
 
