@@ -1,83 +1,62 @@
 module.exports = function solveSudoku(matrix) {
-  if (solveGrid(matrix) == true) {
+  if (solveGrid(matrix) == true)
     return matrix;
-  }
-    
 }
 
-let row = 0 ;
-let col = 0;
 
 function solveGrid(matrix) {
-  var cell = findLocation(matrix, row, col);
-  row = cell[0];
-  col = cell[1];
-  console.log(matrix, '1');
 
 
-  if (row == -1) {
-      return true;
+  if (findFreeLocation(matrix))
+    return true;
+
+  for (let value = 1; value <=9; value++) {
+    if (isSafe(matrix, row, col, value)) {
+      matrix[row][col] = value;
+      if (solveGrid(matrix))
+        return true;
+      matrix[row][col] = 0  ;
+    }
   }
-
-  for (var num = 1; num <= 9; num++) {
-
-      if ( noConflicts(matrix, row, col, num) ) {   
-          matrix[row][col] = num;
-          console.log(matrix, '2');
-          if ( solveGrid(matrix) ) {                
-              return true;
-          }
-
-        
-          matrix[row][col] = 0;
-      }
-  }
-
- 
   return false;
 }
 
-
-function findLocation(grid, row, col) {
-  for ( ; row < 9 ; col = 0, row++)
-      for (; col < 9 ; col++)
-          if (grid[row][col] == 0)
-              return [row, col];
-  return [-1, -1];
+function findFreeLocation(matrix) {
+  for (row = 0; row < 9; row++) 
+    for (col = 0; col < 9; col++) 
+      if (matrix[row][col] == 0) 
+        return false; 
+  return true; 
 }
 
-
-function noConflicts(matrix, row, col, num) {
-  console.log(matrix, '4');
-  return RowOk(matrix, row, num) && ColOk(matrix, col, num) && BoxOk(matrix, row, col, num);
+function isSafe(matrix, row, col, value) {
+  return !usedInRow(matrix, row, value) && 
+           !usedInCol(matrix, col, value) && 
+           !usedInBox(matrix, row - row%3 , col - col%3, value)&& 
+           matrix[row][col]==0; 
 }
 
-function RowOk(matrix, row, num) {
-  for (var col = 0; col < 9; col++)
-      if (matrix[row][col] == num)
-          return false;
-
-  return true;
-}
-function ColOk(matrix, col, num) {
-  for (var row = 0; row < 9; row++)
-  if (matrix[row][col] == num)
-      return false;
-
-  return true;    
-}
-function BoxOk(matrix, row, col, num) {
-  row = (row / 3) * 3;
-  col = (col / 3) * 3;
-
-  for (var r = 0; r < 3; r++)
-      for (var c = 0; c < 3; c++)
-          if (matrix[row + r][col + c] == num)
-              return false;
-
-  return true;
+function usedInRow(matrix, row, value) {
+  for (let col = 0; col < 9; col++) 
+    if (matrix[row][col] == value) 
+      return true; 
+  return false;
 }
 
+function usedInCol(matrix, col, value) {
+  for (let row = 0; row < 9; row++) 
+    if (matrix[row][col] == value) 
+      return true; 
+  return false; 
+}
+
+function usedInBox(matrix, boxStartRow , boxStartCol, value) {
+  for (let row = 0; row < 3; row++) 
+    for (let col = 0; col < 3; col++) 
+      if (matrix[row+boxStartRow][col+boxStartCol] == value) 
+        return true; 
+  return false; 
+}
 // const initial = [
 //   [6, 5, 0, 7, 3, 0, 0, 8, 0],
 //   [0, 0, 0, 4, 8, 0, 5, 3, 0],
